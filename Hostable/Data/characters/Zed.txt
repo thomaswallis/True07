@@ -1,0 +1,123 @@
+[ACCOUNT]
+character-username = Zed
+character-password = 115111110121505152
+
+[CHARACTER]
+character-height = 0
+character-posx = 2657
+character-posy = 3311
+character-rights = 3
+crystal-bow-shots = 0
+skull-timer = 0
+magic-book = 0
+brother-info = 0	0
+brother-info = 1	0
+brother-info = 2	0
+brother-info = 3	0
+brother-info = 4	0
+brother-info = 5	0
+special-amount = 9.0
+selected-coffin = 0
+barrows-killcount = 0
+teleblock-length = 0
+pc-points = 0
+slayerTask = 0
+taskAmount = 0
+magePoints = 0
+autoRet = 0
+barrowskillcount = 0
+flagged = true
+wave = 0
+gwkc = 0
+fightMode = 0
+void = 0	0	0	0	0
+tradeTimer = 0
+pkPoints = 0
+memberStatus = 0
+
+[EQUIPMENT]
+character-equip = 0	1048	1	
+character-equip = 1	6570	1	
+character-equip = 2	6585	1	
+character-equip = 3	6739	1	
+character-equip = 4	-1	0	
+character-equip = 5	-1	1	
+character-equip = 6	-1	0	
+character-equip = 7	1067	1	
+character-equip = 8	-1	0	
+character-equip = 9	-1	1	
+character-equip = 10	-1	1	
+character-equip = 11	-1	0	
+character-equip = 12	773	1	
+character-equip = 13	-1	0	
+
+[LOOK]
+character-look = 0	0
+character-look = 1	2
+character-look = 2	24
+character-look = 3	27
+character-look = 4	33
+character-look = 5	40
+character-look = 6	42
+character-look = 7	11
+character-look = 8	2
+character-look = 9	1
+character-look = 10	2
+character-look = 11	0
+character-look = 12	0
+
+[SKILLS]
+character-skill = 0	99	13043436
+character-skill = 1	99	13043436
+character-skill = 2	99	13043436
+character-skill = 3	99	13043436
+character-skill = 4	99	13043436
+character-skill = 5	99	13043436
+character-skill = 6	99	13043436
+character-skill = 7	99	13043436
+character-skill = 8	99	13045436
+character-skill = 9	99	13043436
+character-skill = 10	99	13043436
+character-skill = 11	99	13043436
+character-skill = 12	99	13043436
+character-skill = 13	99	13043436
+character-skill = 14	99	13043436
+character-skill = 15	99	13043436
+character-skill = 16	99	13043436
+character-skill = 17	99	13043436
+character-skill = 18	99	13043436
+character-skill = 19	99	13043436
+character-skill = 20	99	13043436
+character-skill = 21	99	13043436
+character-skill = 22	99	13043436
+character-skill = 23	99	13043436
+character-skill = 24	99	13043436
+
+[ITEMS]
+character-item = 0	996	2147483647
+character-item = 1	3026	500
+character-item = 2	6687	500
+character-item = 3	2444	100
+character-item = 4	2438	100
+character-item = 5	2442	100
+character-item = 6	2446	100
+character-item = 7	566	20000
+character-item = 8	561	40000
+character-item = 9	556	60000
+character-item = 10	393	1000
+character-item = 11	8008	100
+character-item = 12	8009	99
+character-item = 13	8010	100
+character-item = 14	8011	100
+character-item = 15	8012	99
+character-item = 16	4752	1
+character-item = 17	2616	1
+character-item = 18	76	1
+character-item = 20	1512	1
+
+[BANK]
+
+[FRIENDS]
+
+[EOF]
+
