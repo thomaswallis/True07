@@ -1,0 +1,39 @@
+JaGeX File system format
+by Tom (www.Nuke-Net.com)
+
+Disclaimer:
+I claim no ownership of the information disclosed in this
+document. This information is compiled knowledge of my own,
+and various members of the community, and has been freely 
+released to the public. Runescape, and the formats disclosed
+in this document, are copyright JaGeX Ltd.
+
+The File System format consists of .dat files, and .idx* files 
+(* = numerical value, identifying each index file.)
+Index files generally contain files of the same type, or group.
+idx0 contains archive files
+idx1 contains model files
+idx2 contains animation files
+idx3 contains audio (midi) files
+idx4 contains map files
+
+Data files consist of 520 byte 'sectors', which holds an 8 byte header,
+aswel as 512 bytes of file data.
+
+The 8 byte header format is as follows:
+
+Data			Size (bits)	Description
+File number		16		The id of the file contained in this sector
+File part number	16		Which part of the file the sector contains
+Sector number		24		The sector id (of the whole cache) we are reading
+Cache number		8		The cache id of the file in this sector
+
+
+Index files basically map out the .dat data files. They contain 6 bytes describing
+each file under their cache tree.
+
+The 6 bytes describing each file are as follows:
+
+Data			Size (bits)	Description
+File Size		24		The size in bytes of the file we're reading
+Sector at		24		The sector the file starts at

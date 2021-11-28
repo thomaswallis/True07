@@ -1,0 +1,10 @@
+The following is a list of all known bugs, found within the Cache Suite.
+
+Sometimes, when using the image archive editor, a cache that needs to be repacked can produce
+unpredicted outputs. The image appears to be corrupt, However, at first glance the
+archive appears to be correctly compressed.
+
+In the floor config editor, the texture spinner change listener doesn't work properly. Ideally,
+it should update every change, instead, you have to click off the cell before it updates.
+
+In the item config editor, properties that use array values aren't able to be modified

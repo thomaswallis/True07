@@ -1,0 +1,62 @@
+JaGeX Archive format
+by Tom (www.Nuke-Net.com)
+
+Disclaimer:
+I claim no ownership of the information disclosed in this
+document. This information is compiled knowledge of my own,
+and various members of the community, and has been freely 
+released to the public. Runescape, and the formats disclosed
+in this document, are copyright JaGeX Ltd.
+
+Jagex archives are most commonly attributed to the extension .JAG, this is probably
+because in the past, Jagex' game caches have consisted of just a number of .JAG files,
+instead of the .dat/.idx* files used today.
+It could also be because of the protocol used today to retrieve the archives from
+jagex' servers. In short, the protocol's requests are prefixed with 'JAGGRAB'
+
+The format itsself, is really just a container. A common misconception with these
+archive files is that they use a proprietary format devised by Jagex. This
+is simply not true, the compression method used in archive files from the
+'old engine' era, is simply Jagex' own implementation of BZip2 compression.
+The only difference between a standard BZip2 file and Jagex' implementation, is
+that the compressed output is without the 4 byte header. Jagex' implementation
+only supports a BZip2 blocksize of 1. Sometimes compression might be possible
+with a larger blocksize, although most of the time Jagex' decompression class
+will throw an error, and the file will be decompressed improperly.
+
+On to the format. The container can be compressed in 1 of 2 ways.
+The first 6 bytes, are read as two 24 bit integers. These are as follows:
+
+Data			Size (bits)	Description
+Decompressed size	24		The size of the following bytes, uncompressed.
+Compressed size		24		The size of the following bytes, compressed with BZip2
+
+If the compressed size isn't equal to the decompressed size, then the client
+must presume that the following bytes are compressed with BZip2. The archive is
+then decompressed, and the data buffer is replaces with the decompressed archive.
+After this stage has been completed, the data is treated the same way.
+
+Next, is a 16 bit int, which tells us how many files are contained in the archive.
+
+Data		Size (bits)	Description
+File count	16		The number of files in the archive
+
+Follows, is what I call the 'Info block'. This is basically a block of 10 bytes
+for each file. The data contained in these 10 bytes are as follows:
+
+Data			Size (bits)	Description
+File Identifier		32		A unique identifier for this file. For more info on this
+					see my docs on the Identifier
+Decompressed size	24      	The size of the file, uncompressed
+Compressed size		24      	The size of the file, compressed with BZip2
+
+If the container was compressed as a whole, the two values, decompressed size and
+compressed size MUST be equal. Or rather, the compressed size value is ignored if
+the container was compressed as whole. If the archive wasn't compressed as a
+whole, the values must be true to the proper sizes. Each file is compressed
+individually, and the two values are used as a check to make sure the file
+was decompressed sucessfully.
+
+What follows next, is the 'data block'. This is, quite simply, each file in the
+archive written one after the other. If the archive wasn't compressed as a whole,
+the file data is compressed to the BZip2 format before being written.

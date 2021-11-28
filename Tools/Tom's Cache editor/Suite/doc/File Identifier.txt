@@ -1,0 +1,127 @@
+JaGeX Archive format
+by Tom (www.Nuke-Net.com)
+
+Disclaimer:
+I claim no ownership of the information disclosed in this
+document. This information is compiled knowledge of my own,
+and various members of the community, and has been freely 
+released to the public. Runescape, and the formats disclosed
+in this document, are copyright JaGeX Ltd.
+
+You may have read my other document on the JaGeX Archive format (If not, I suggest you go read it now,
+otherwise this information is pretty useless =]). You will know, that in an archive, each file has a unique
+'File Identifier'. This, for the most part, is a hash. It is only somewhat reversible. 
+Ie, if the identifier is a positive number, and if it used no negative numbers in its own generation.
+This usually puts the scope for reversibility down to around 4 character strings. 
+The reason for such a small scope, is that during generation of this 'hash', JaGeX' implementation only uses 32-bit
+width integers, and so, when the identifier overflows this width, java automatically turns it into a negative number.
+This is when data-loss occurs. 
+
+The function for generating this hash, is as follows:
+
+		int getHash(String s) {
+			int identifier = 0;
+			s = s.toUpperCase();
+			for (int j = 0; j < s.length(); j++) {
+				identifier = (identifier * 61 + s.charAt(j)) - 32;
+			}
+			return identifier;
+		}
+
+
+
+Although this may seem archaic at a first glance, its actually reasonably simple when studied properly.
+There are only really two ways of reversing this hash, both are rather inaccurate.
+
+The first, devised by myself (In a rather messy function) is as follows:
+
+		String reverseHash(int hash) {
+		    int strLen = 0;
+		    int tmpHash = hash;
+		    int lastSolve = 0;
+		    while (tmpHash >= 32) {
+		        tmpHash /= 61;
+		        tmpHash += 31;
+		        strLen++;
+		    }
+		    strLen--;
+		    tmpHash = hash;
+		    char[] out = new char[strLen];
+		    for (int x = 0; x < strLen; x++) {
+		        tmpHash = hash;
+		        for(int i = x+1; i < strLen; i++) {
+		            tmpHash /= 61;
+		            tmpHash += 31;
+		        }
+
+		        int res = tmpHash-32;
+
+		        lastSolve *= 61;
+		        if (lastSolve != 0) {
+		            res -= lastSolve;
+		        }
+		        res += 32;
+
+		        lastSolve = tmpHash-32;
+		        out[x] = (char)res;
+		        if (x == strLen-2) {
+		            out[x]++;
+		        }
+		        System.out.print(out[x]); // Print out the next character found
+		    }
+		    System.out.print('\n');
+		    int retHash = getHash(String.valueOf(out));
+		    System.out.println("Returned "+String.valueOf(out)+": "+retHash+"");
+		    if (retHash != hash) {
+		        System.out.println("However, does not match inputted hash. Unable to crack "+hash);
+		    }
+		    return String.valueOf(out);
+		}
+
+
+
+If you cab get past the terrible code, you can see its actually a rather simple method of reversing the hash, although, as we know,
+it is highly inaccurate.
+
+The second method of reversing a hash is through brute force. As i'm sure you know, brute-forcing is a method
+used to reverse many string encryption methods, and works best when a hash is more accurate (When a single hash can
+only be applied to a few string matches)
+Although, this can take a very very long time, and is generally only used when no alternative is available.
+To get an idea of the method behind this, here is newbiehacker's method of brute-forcing the hash:
+
+		char[] validChars = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+		            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '_', '.'};
+
+		void main(String[] args) {
+		    StringBuilder sb = new StringBuilder();
+		    final int i = 529843337;
+		    int j = 0;
+		    // Calculate the string length
+		    int len = 0;
+		    while(j < i) {
+		        j = (j * 61 + 'Z') - 32;
+		        len++;
+		    }
+		    byte[] charLink = new byte[len];
+		    System.out.println("String length: " + len);
+		    while(hash(charLink) != i) {
+		        inc(charLink, 0);
+		    }
+		    System.out.print("Decoded hash, output: ");
+		    for(byte b: charLink)
+		        System.out.print(validChars[b]);
+		    System.out.println();
+		}
+
+		void inc(byte[] charLink, int idx) {
+		    charLink[idx] = (byte) ((charLink[idx] + 1) % validChars.length);
+		    if(charLink[idx] == 0)
+		        inc(charLink, idx + 1);
+		}
+
+		int hash(byte[] charLink) {
+		    int hash = 0;
+		    for (byte aCharLink : charLink)
+		        hash = (hash * 61 + validChars[aCharLink]) - 32;
+		    return hash;
+		}
